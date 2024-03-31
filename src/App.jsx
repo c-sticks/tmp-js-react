@@ -1,20 +1,29 @@
 /* eslint-disable react/jsx-key */
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "./App.css";
 
 function App() {
-  const [todos, setTodos] = useState([]);
+  const [todos, setTodos] = useState(null);
   let [text, setText] = useState("");
+
+  useEffect(() => {
+    console.log("getItem");
+    setTodos(JSON.parse(localStorage.getItem("todos") ?? []));
+  }, []);
 
   function changeText(e) {
     setText(e.target.value);
   }
   function onAdd() {
-    setTodos([...todos, text]);
+    const next = [...todos, text];
+    localStorage.setItem("todos", JSON.stringify(next));
+    setTodos(next);
     setText("");
   }
   function onDelete(index) {
-    setTodos(todos.filter((_, i) => i !== index));
+    const next = todos.filter((_, i) => i !== index);
+    localStorage.setItem("todos", JSON.stringify(next));
+    setTodos(next);
   }
 
   return (
@@ -23,7 +32,7 @@ function App() {
         <input value={text} onChange={changeText}></input>
         <button onClick={onAdd}>ADD</button>
       </div>
-      {todos.map((todo, i) => (
+      {todos?.map((todo, i) => (
         <div
           style={{
             display: "flex",
