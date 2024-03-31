@@ -6,12 +6,15 @@ function App() {
   let [names, setNames] = useState([]);
   const googleAddress = "https://google.com";
 
+  let [text, setText] = useState("");
+
   function onClick() {
     setNames([...names, "john" + new Date().toISOString()]);
   }
 
   return (
     <>
+      {text}
       {names.map((name, index) =>
         index % 2 === 0 ? (
           <div>
@@ -32,6 +35,12 @@ function App() {
       )}
 
       <button onClick={onClick}>ADD</button>
+      <input
+        onChange={(e) => {
+          console.log("change " + e.target.value);
+          setText(e.target.value);
+        }}
+      ></input>
     </>
   );
 }
