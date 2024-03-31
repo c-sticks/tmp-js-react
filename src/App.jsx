@@ -1,24 +1,24 @@
+/* eslint-disable react/jsx-key */
+import { useState } from "react";
 import "./App.css";
 
-function H1() {
-  return <h1>Vite + React 2</h1>;
-}
-
 function App() {
-  const text = 1 + 100;
+  let [count, setState] = useState(0);
   const googleAddress = "https://google.com";
+
+  function onClick() {
+    setState(count + 1);
+  }
 
   return (
     <>
-      {[1, 2, 3]
-        .map((num) => `スパイダーマン${num}`)
-        .map((num) => (
-          <div>
-            <a href={`https://www.google.com/search?q=${num}`}>{num}</a>
-          </div>
-        ))}
-      <p>{text}</p>
-      <a href={googleAddress}>{text}</a>
+      <div>
+        <a href={`${googleAddress}/search?q=スタイダーマン${count}`}>{count}</a>
+      </div>
+
+      <p>{count}</p>
+      <a href={googleAddress}>{count}</a>
+      <button onClick={onClick}>ADD</button>
     </>
   );
 }
