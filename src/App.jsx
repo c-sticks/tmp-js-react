@@ -3,21 +3,34 @@ import { useState } from "react";
 import "./App.css";
 
 function App() {
-  let [count, setState] = useState(0);
+  let [names, setNames] = useState([]);
   const googleAddress = "https://google.com";
 
   function onClick() {
-    setState(count + 1);
+    setNames([...names, "john" + new Date().toISOString()]);
   }
 
   return (
     <>
-      <div>
-        <a href={`${googleAddress}/search?q=スタイダーマン${count}`}>{count}</a>
-      </div>
+      {names.map((name, index) =>
+        index % 2 === 0 ? (
+          <div>
+            <a href={`${googleAddress}/search?q=スタイダーマン${name}`}>
+              {name}
+            </a>
+          </div>
+        ) : (
+          <div>
+            <a
+              style={{ color: "red" }}
+              href={`${googleAddress}/search?q=スタイダーマン${name}`}
+            >
+              {name}
+            </a>
+          </div>
+        )
+      )}
 
-      <p>{count}</p>
-      <a href={googleAddress}>{count}</a>
       <button onClick={onClick}>ADD</button>
     </>
   );
